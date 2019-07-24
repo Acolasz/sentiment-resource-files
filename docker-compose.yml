@@ -1,0 +1,21 @@
+version: '3'
+services:
+  logic-serv:
+    image: acolasz/sentiment-analysis-logic:0.0.1
+    container_name: logic-1
+    ports:
+      - "5050:5000"
+  webapp-serv:
+    image: acolasz/sentiment-analysis-webapp:0.0.1
+    container_name: webapp-1
+    environment:
+      SA_LOGIC_API_URL: http://172.18.0.1:5050
+    depends_on:
+      - logic-serv
+    ports:
+      - "8080:8080"
+  frontend-serv:
+    image: acolasz/sentiment-analysis-frontend:0.0.1
+    container_name: frontend-1
+    ports:
+      - "8888:80"
